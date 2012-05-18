@@ -1,0 +1,446 @@
+(load-file "/home/nifan/emacs/emacs-plugins/cedet-1.0.1/common/cedet.el")
+(global-ede-mode 1)
+(semantic-load-enable-code-helpers)
+(global-srecode-minor-mode 1)
+
+
+;; (setq frame-title-format;设置标题栏显示文件的完整路径名
+;; '("%S" (buffer-file-name "%f"
+;; (dired-directory dired-directory "%b"))))
+
+(setq transient-mark-mode t)
+ 
+(add-to-list 'load-path "/home/nifan/emacs/emacs-plugins/")
+(add-to-list 'load-path "/home/nifan/emacs/emacs-plugins/color-theme-6.6.0")
+(require 'color-theme)
+(color-theme-initialize)
+;;(color-theme-dark-laptop)
+;;(color-theme-tty-dark)
+;(color-theme-comidia)
+(color-theme-pok-wog)
+;;(color-theme-hober)
+;;(color-theme-pierson)2470
+;;(color-theme-andreas)
+
+ ;设定光标为短线
+(setq-default cursor-type 'bar)
+;(global-font-lock-mode t)
+(fset 'yes-or-no-p 'y-or-n-p)
+(show-paren-mode t)
+
+(setq default-fill-column 80);默认显示 80列就换行
+;(set-scroll-bar-mode nil)  ; 取消滚动栏
+(setq mouse-yank-at-point t)    ; 不在鼠标点击的那个地方插入剪贴板内容
+(setq user-full-name "nifan")
+(setq user-mail-address "nfn.bak@gmail.com")    ; 设置有用的个人信息,这在很多地方有用。
+(setq-default kill-whole-line t) ; 在行首 C-k 时，同时删除该行
+(setq show-paren-mode t) ;打开括号匹配显示模式
+(setq show-paren-style 'parenthesis) ;括号匹配时可以高亮显示另外一边的括号，但光标不会烦人的跳到另一个括号处。
+(setq mouse-avoidance-mode 'animate) ;光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线。
+(setq time-stamp-active t)
+(setq time-stamp-warn-inactive t)
+(setq track-eol t)    ; 当光标在行尾上下移动的时候，始终保持在行尾。
+(setq Man-notify-method 'pushy) ; 当浏览 man page 时，直接跳转到 man buffer。
+(setq next-line-add-newlines nil)    ; Emacs 21 中已经是缺省设置。按 C-n 或向下键时不添加新行。
+(setq speedbar-show-unknown-files t);;可以显示所有目录以及文件
+(setq dframe-update-speed nil);;不自动刷新，手动 g 刷新
+(setq speedbar-update-flag nil)
+(setq speedbar-use-images nil);;不使用 image 的方式
+(setq speedbar-verbosity-level 0)
+
+
+;; (require 'auto-complete)
+;; (global-auto-complete-mode t)
+;; (setq ac-dwim t)
+;; (require 'auto-complete-extension)
+;; (require 'auto-complete-etags)
+;; (setq ac-auto-start 3)
+
+;; (define-key ac-complete-mode-map "\M-i" 'ac-complete)
+;; (define-key ac-complete-mode-map "\r" 'ac-complete)
+
+;(load-file "/home/nifan/emacs/emacs-plugins/setnu.el")
+;  (require 'setnu)
+;;  (setnu-mode t)
+;; (require 'display-line-number)
+;; (global-display-line-number-mode 1)
+;; (setq display-line-number-format "%3d ")
+;; (add-hook 'c-mode-hook 'display-line-number-mode)
+;; (add-hook 'c++-mode-hook 'display-line-number-mode)
+(require 'linum)
+(global-linum-mode 1)
+
+
+'(column-number-mode t)
+'(compilation-scroll-output t)
+'(compile-command "make")
+'(display-time-mode t)
+'(tab-width 2)
+(tool-bar-mode nil)
+;;'(transient-mark-mode t)
+
+
+
+ ;;下面配置一下cedet
+
+
+
+ (add-to-list 'load-path 
+ 	     "/home/nifan/emacs/emacs-plugins/ecb")
+(require 'ecb)
+(global-set-key (kbd "<f12>") 'ecb-toggle-ecb-windows)
+
+;(load-file "/home/nifan/emacs/emacs-plugins/cscope-15.7a/contrib/xcscope/xcscope.el")
+(require 'xcscope)
+
+;;;; 显示时间
+(setq display-time-24hr-format t)
+(setq display-time-day-and-date t)
+(display-time)
+;;;; 关闭启动画面
+(setq inhibit-startup-message t)
+
+;;;;设置大的kill ring
+(setq kill-ring-max 150)
+
+;;;;自动补齐策略
+
+(defun my-indent-or-complete ()
+  (interactive)
+  (if (looking-at "\\>")
+      (hippie-expand nil)
+    (indent-for-tab-command))
+  )
+
+(global-set-key [control tab] 'my-indent-or-complete)
+
+(autoload 'senator-try-expand-semantic "senator")
+(setq hippie-expand-try-functions-list
+      '(
+	senator-try-expand-semantic
+	try-expand-dabbrev
+	try-expand-dabbrev-visible
+	try-expand-dabbrev-all-buffers
+	try-expand-dabbrev-from-kill
+	try-expand-list
+	try-expand-list-all-buffers
+	try-expand-line
+        try-expand-line-all-buffers
+        try-complete-file-name-partially
+        try-complete-file-name
+        try-expand-whole-kill
+        )
+      )
+
+;;;; CC-mode配置  http://cc-mode.sourceforge.net/
+(require 'cc-mode)
+(c-set-offset 'inline-open 0)
+(c-set-offset 'friend '-)
+(c-set-offset 'substatement-open 0)
+
+;;;;根据后缀判断所用的mode
+;;;;注意：我在这里把.h关联到了c++-mode
+(setq auto-mode-alist
+      (append '(("\\.h$" . c++-mode)) auto-mode-alist))
+
+
+;;;;我的C/C++语言编辑策略
+
+(defun my-c-mode-common-hook()
+  (setq tab-width 2 indent-tabs-mode nil)
+	(setq c-basic-offset 2 )
+;;; hungry-delete and auto-newline
+					; (c-toggle-auto-hungry-state 1)
+  ;;按键定义
+  (define-key c-mode-base-map [(control \`)] 'hs-toggle-hiding)
+  (define-key c-mode-base-map [(return)] 'newline-and-indent)
+;;(define-key c-mode-base-map [(f7)] 'compile)
+  (define-key c-mode-base-map [(f8)] 'ff-get-other-file)
+  (define-key c-mode-base-map [(meta \`)] 'c-indent-command)
+  ;;  (define-key c-mode-base-map [(tab)] 'hippie-expand)
+  (define-key c-mode-base-map [(tab)] 'my-indent-or-complete)
+  ;;(define-key c-mode-base-map [(meta ?/)] 'semantic-ia-complete-symbol-menu)
+  ;;预处理设置
+  (setq c-macro-shrink-window-flag t)
+  (setq c-macro-preprocessor "cpp")
+  (setq c-macro-cppflags " ")
+  (setq c-macro-prompt-flag t)
+  ;; (setq hs-minor-mode t)
+  ;(setq abbrev-mode t)
+  (setq tab-width 2 indent-tabs-mode nil)
+  )
+(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+
+;;;;我的C++语言编辑策略
+(defun my-c++-mode-hook()
+  (setq tab-width 2 indent-tabs-mode nil)
+  (c-set-style "stroustrup")
+  (define-key c++-mode-map [f3] 'replace-regexp))
+
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+
+;;;;C/C++语言启动时自动加载semantic对/usr/include的索引数据库
+(setq semanticdb-search-system-databases t)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (setq semanticdb-project-system-databases
+                  (list (semanticdb-create-database
+			 semanticdb-new-database-class
+			 "/usr/include")))))
+
+;;;;光标靠近鼠标指针时让鼠标指针自己闪开
+(mouse-avoidance-mode 'animate)
+
+;;;;修改标题栏，显示buffer的名字
+(setq frame-title-format "%b")
+
+;;;;向左右滚动的命令激活：C-x < 和 C-x >
+(put 'scroll-left 'disabled nil)
+
+;;    代码折叠
+(setq hs-minor-mode t)
+(load-library "hideshow")
+(add-hook 'c-mode-hook 'hs-minor-mode)
+(add-hook 'c++-mode-hook 'hs-minor-mode)  
+(add-hook 'java-mode-hook 'hs-minor-mode)
+(add-hook 'perl-mode-hook 'hs-minor-mode)
+(add-hook 'php-mode-hook 'hs-minor-mode)
+(add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)
+
+(defvar gdb-many-windows t)
+
+(require 'tabbar)
+(tabbar-mode t)
+(global-set-key (kbd "M-[") 'tabbar-backward-group)
+(global-set-key (kbd "M-]") 'tabbar-forward-group)
+(global-set-key (kbd "<M-up>") 'tabbar-backward-tab)
+(global-set-key (kbd "<M-down>") 'tabbar-forward-tab)
+
+;; 可以从外面粘贴东西
+(setq x-select-enable-clipboard t)
+
+(require 'session)
+;; (setq session-save-file "~/.emacs.d/_session")
+(add-hook 'after-init-hook 'session-initialize)
+
+
+(global-set-key (kbd "<s-up>") 'windmove-up)
+(global-set-key (kbd "<s-down>") 'windmove-down)
+(global-set-key (kbd "<s-left>") 'windmove-left)
+(global-set-key (kbd "<s-right>") 'windmove-right)
+
+(global-set-key (kbd "<f3>") 'cscope-find-this-symbol)
+(global-set-key (kbd "<f4>") 'cscope-find-this-text-string)
+(global-set-key [(meta g)] 'goto-line)
+(global-set-key [(meta ?/)] 'hippie-expand)
+(global-set-key (kbd "<f1>") 'kill-this-buffer)
+(global-set-key (kbd "<f2>") 'save-buffer)
+
+(global-set-key (kbd "s-c") 'ansi-term)
+(global-set-key (kbd "s-x") 'cscope-find-global-definition-no-prompting)
+(global-set-key (kbd "s-z") 'cscope-pop-mark)
+(global-set-key "\C-xs" 'cscope-find-this-symbol)
+(global-set-key "\C-xc" 'cscope-find-functions-calling-this-function)
+(global-set-key "\C-xt" 'cscope-find-this-text-string)
+(global-set-key "\C-xd" 'cscope-find-called-functions)
+(global-set-key "\C-xg" 'cscope-find-global-definition)
+(global-set-key "\C-xf" 'cscope-find-this-file)
+(global-set-key "\C-xe" 'cscope-find-egrep-pattern)
+
+(global-set-key "\M-," 'pop-tag-mark )
+(require 'sr-speedbar)
+(global-set-key (kbd "<M-kp-enter>") 'sr-speedbar-toggle) 
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "s-\\") 'comment-or-uncomment-region)
+
+(global-set-key (kbd "M-n") 'semantic-ia-complete-symbol-menu)
+(global-set-key (kbd "M-s") 'save-buffer)
+(global-set-key (kbd "M-m") 'set-mark-command)
+(global-set-key (kbd "<kp-decimal>") 'end-of-line)
+(global-set-key (kbd "<kp-0>") 'beginning-of-line)
+(global-set-key (kbd "<kp-add>") 'point-to-register)
+(global-set-key (kbd "<kp-subtract>") 'register-to-point)
+
+;;end of short cut
+
+;自动补全括号
+(defun my-c-mode-auto-pair ()
+  (interactive)
+  (make-local-variable 'skeleton-pair-alist)
+  (setq skeleton-pair-alist  '(
+                   (?` ?` _ "''")
+                   (?\( ?  _ " )")
+                   (?\[ ?  _ " ]")
+                   (?{ \n > _ \n ?} >)))
+  (setq skeleton-pair t)
+  (local-set-key (kbd "(") 'skeleton-pair-insert-maybe)
+  (local-set-key (kbd "{") 'skeleton-pair-insert-maybe)
+  (local-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
+  (local-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
+  (local-set-key (kbd "[") 'skeleton-pair-insert-maybe))
+(add-hook 'c-mode-hook 'my-c-mode-auto-pair)
+(add-hook 'c++-mode-hook 'my-c-mode-auto-pair)
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(ac-auto-start 3)
+ '(company-backends (quote (company-elisp company-css company-eclim company-semantic company-clang company-xcode (company-gtags company-etags company-dabbrev-code company-keywords) company-files company-dabbrev)))
+ '(display-time-mode t)
+ '(ecb-layout-name "leftright2")
+ '(ecb-options-version "2.40")
+ '(ecb-primary-secondary-mouse-buttons (quote mouse-1--C-mouse-1))
+ '(ecb-tip-of-the-day nil)
+ '(ecb-windows-width 0.15)
+ '(fringe-mode (quote (0)) nil (fringe))
+ '(global-company-mode t)
+ '(global-hl-line-mode t)
+ '(scroll-bar-mode nil)
+ '(show-paren-mode t)
+ '(speedbar-default-position (quote left))
+ '(tool-bar-mode nil)
+ '(truncate-partial-width-windows nil))
+
+;;定义在cpp文件和.h文件中切换的函数
+;;;###autoload
+(defun switch-source-file ()
+  (interactive)
+  (setq file-name (buffer-file-name))
+  (if (string-match "\\.c" file-name)
+      (find-file (replace-regexp-in-string "\\.c" "\.h" file-name)))
+  (if (string-match "\\.h" file-name)
+      (find-file (replace-regexp-in-string "\\.h" "\.c" file-name))))
+
+(global-set-key  (kbd "<C-tab>") 'switch-source-file)
+
+;;装载doxymacs
+(require 'doxymacs)
+;;注释高亮，针对C和C++程序
+(defun my-doxymacs-font-lock-hook ()
+  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+      (doxymacs-font-lock)))
+(add-hook 'font-lock-mode-hook 'my-doxymacs-font-lock-hook)
+ (add-hook 'c-mode-common-hook 'doxymacs-mode) 
+
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "DarkSlateGray" :foreground "White" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "Monaco"))))
+ '(hl-line ((t (:foreground "pink")))))
+
+;; Xrefactory configuration part ;;
+;(defvar xref-current-project t) ;; can be also "my_project_name"
+;(defvar xref-key-binding 'local) ;; can be also 'local or 'none
+;(setq load-path (cons "/home/nifan/emacs/emacs-plugins/xref/emacs" load-path))
+;(setq exec-path (cons "/home/nifan/emacs/emacs-plugins/xref" exec-path))
+;(load "xrefactory")
+;; end of Xrefactory configuration part ;;
+
+
+;(message "xrefactory loaded")
+
+(add-to-list 'load-path "~/emacs/emacs-plugins/msf-abbrev.el/file")
+
+;Then, I do the following in my ~/.emacs:
+
+;; ensure abbrev mode is always on
+;(setq-default abbrev-mode t)
+
+;; do not bug me about saving my abbreviations
+(setq save-abbrevs nil)
+
+;; load up modes I use
+(require 'cc-mode)
+(require 'perl-mode)
+(require 'cperl-mode)
+(require 'sh-script)
+(require 'shell)
+;(require 'tex-site) ;; I use AUCTeX
+;(require 'latex)    ;; needed to define LaTeX-mode-hook under AUCTeX
+;(require 'tex)      ;; needed to define TeX-mode-hook under AUCTeX
+;; (require 'python)   ;; I use python.el from Emacs CVS, uncomment if you do also
+
+;; load up abbrevs for these modes
+;(require 'msf-abbrev)
+;(setq msf-abbrev-verbose t) ;; optional
+;(setq msf-abbrev-root "~/emacs/mode-abbrevs")
+;(global-set-key (kbd "C-c l") 'msf-abbrev-goto-root)
+;(global-set-key (kbd "C-c a") 'msf-abbrev-define-new-abbrev-this-mode)
+;(msf-abbrev-load)
+
+;(define-key ac-complete-mode-map "\M-m" 'ac-next)
+;(define-key ac-complete-mode-map "\C-p" 'ac-previous)
+
+;(define-key ac-complete-mode-map "\t" 'ac-complete)
+;(define-key ac-complete-mode-map "\M-/" 'ac-complete)
+;
+(setq load-path (cons "/opt/virtutech/simics-4.0/simics-model-builder-4.0.16/scripts" load-path))
+(autoload 'dml-mode "dml-mode" "DML mode" t)
+(add-to-list 'auto-mode-alist '("\\.dml\\'".dml-mode))
+
+(require 'my-elisp)
+(global-set-key (kbd "s-/") 'comment-from-current-line)
+(global-set-key (kbd "s-k") 'delete-from-current-line)
+(global-set-key (kbd "s-a") 'yank-at-line-start)
+(global-set-key (kbd "s-e") 'yank-at-line-end)
+(global-set-key (kbd "s-f") 'format-whole-buffer)
+(global-set-key (kbd "s-w") 'copy-from-current-line)
+(global-set-key (kbd "s-n") 'mark-from-current-line)
+(global-set-key (kbd "s-u") 'uncomment-from-current-line)
+(global-set-key (kbd "s-.") 'save-here)
+(global-set-key (kbd "s-,") 'last-position)
+
+;(require 'my-keys)
+
+;(add-to-list 'ac-dictionary-directories "~/emacs/auto-complete-1.3/ac-dict")
+;(ac-config-default)
+
+(add-to-list 'load-path "/home/nifan/emacs/auto-complete-1.3")
+(require 'auto-complete-config)
+(add-to-list 'load-path "/home/nifan/emacs/emacs-plugins/company")
+(autoload 'company-mode "company" nil t)
+
+;;;;F7：调用compile
+(global-set-key (kbd "<f7>") 'compile)
+(global-set-key [(f6)] 'gud-step)
+(global-set-key [(f5)] 'gud-next)
+(global-set-key [(f8)] 'gud-go)
+(global-set-key [(f9)] 'gud-print)
+
+(global-set-key (kbd "C-=") 'hs-show-block)
+(global-set-key (kbd "C--") 'hs-hide-block)
+
+
+;全屏
+(defun my-fullscreen ()
+  (interactive)
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(2 "_NET_WM_STATE_FULLSCREEN" 0)))
+ 
+;最大化
+(defun my-maximized-horz ()
+  (interactive)
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(1 "_NET_WM_STATE_MAXIMIZED_HORZ" 0)))
+(defun my-maximized-vert ()
+  (interactive)
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
+(defun my-maximized ()
+  (interactive)
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(1 "_NET_WM_STATE_MAXIMIZED_HORZ" 0))
+  (interactive)
+  (x-send-client-message
+   nil 0 nil "_NET_WM_STATE" 32
+   '(1 "_NET_WM_STATE_MAXIMIZED_VERT" 0)))
+
+(global-set-key [(f11)] 'my-fullscreen)
