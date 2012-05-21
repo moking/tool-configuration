@@ -25,6 +25,7 @@ nmap <left> :bp<cr>
 set fdm=syntax
 color asmanian2
 nmap <tab> ==
+nmap . :
 
 filetype plugin indent on 
 set completeopt=longest,menu 
@@ -34,3 +35,8 @@ set guicursor+=i:ver30-iCursor
 let g:SuperTabDefaultCompletionType = "<c-n>"
 highlight Pmenu ctermbg=9 guibg=brown gui=bold
 highlight PmenuSel ctermbg=4
+set cursorline
+highlight CursorLine ctermfg=green
+set statusline+=%f
+"always display statusline
+set laststatus=2
