@@ -1,0 +1,52 @@
+  ace-window         20160225.819  installed             Quickly switch windows.
+  anti-zenburn-theme 20160302.1603 installed             Low-contrast Zenburn-inverted theme
+  auto-complete      20160229.1706 installed             Auto Completion for GNU Emacs
+  auto-complete-c... 20150911.2023 installed             An auto-complete source for C/C++ header files
+  auto-complete-c... 20140409.52   installed             Auto Completion source for clang for GNU Emacs
+  auto-complete-c... 20130526.814  installed             Auto Completion source for clang for GNU Emacs
+  auto-complete-e... 20140320.24   installed             Exuberant ctags auto-complete.el source
+  auto-dictionary    20150410.910  installed             automatic dictionary switcher for flyspell
+  autobookmarks      20151120.1445 installed             Save recently visited files and buffers
+  autopair           20160304.437  installed             Automagically pair braces and quotes like TextMate
+  avy                20160229.33   installed             tree-based completion
+  bing-dict          20160105.2102 installed             Minimalists' English-Chinese Bing dictionary
+  chinese-pyim       20160311.2031 installed             Chinese pinyin input method
+  chinese-word-at... 20150618.1838 installed             Add `chinese-word' thing to `thing-at-point'
+  chinese-yasdcv     20150702.616  installed             Yet another frontend for the StarDict command-line program
+  color-theme        20080305.34   installed             install color themes
+  color-theme-sol... 20160219.924  installed             Solarized themes for Emacs
+  company            20160311.448  installed             Modular text completion framework
+  company-try-hard   20150902.1506 installed             get all completions from company backends
+  company-ycm        20140904.1117 installed             company-ycm
+  dash               20160306.1222 installed             A modern list library for Emacs
+  desktop+           20151004.1240 installed             Handle special buffers when saving & restoring sessions
+  dic-lookup-w3m     20140513.1741 installed             look up dictionaries on the Internet
+  ecb                20140215.114  installed             a code browser for Emacs
+  eclipse-theme      20150929.601  installed             Theme based on Eclipse circa 2010
+  evil               20160306.2312 installed             Extensible Vi layer for Emacs.
+  evil-nerd-comme... 20160209.49   installed             Comment/uncomment lines efficiently. Like Nerd Commenter in Vim
+  f                  20160306.447  installed             Modern API for working with files and directories
+  git                20140128.241  installed             An Elisp API for programmatically using Git
+  goto-chg           20131228.659  installed             goto last change
+  hc-zenburn-theme   20150928.933  installed             An higher contrast version of the Zenburn theme.
+  highlight-symbol   20160102.1209 installed             automatic and manual symbol highlighting
+  mode-icons         20160301.2216 installed             Show icons for modes
+  names              20151201.404  installed             Namespaces for emacs-lisp. Avoid name clobbering without hiding symbols.
+  popup              20151222.1339 installed             Visual Popup User Interface
+  pos-tip            20150318.813  installed             Show tooltip at point
+  powerline          20160224.2052 installed             Rewrite of Powerline
+  s                  20160115.58   installed             The long lost Emacs string manipulation library.
+  smex               20151212.1409 installed             M-x interface with Ido-style fuzzy matching.
+  sr-speedbar        20150804.951  installed             Same frame speedbar
+  stem               20131102.409  installed             Routines for stemming
+  switch-window      20160229.334  installed             A *visual* way to choose a window to switch to
+  tabbar             20141109.143  installed             Display a tab bar in the header line
+  tabbar-ruler       20160216.1932 installed             Pretty tabbar, autohide, use both tabbar/ruler
+  undo-tree          20140509.522  installed             Treat undo history as a tree
+  w3m                20121224.1747 installed             an Emacs interface to w3m
+  xcscope            20160201.1926 installed             cscope interface for (X)Emacs
+  yasnippet          20160226.1359 installed             Yet another snippet extension for Emacs.
+  ycm                20150822.1136 installed             Emacs client for the YouCompleteMe auto-completion server.
+  youdao-dictionary  20150913.2344 installed             Youdao Dictionary interface for Emacs
+  zenburn-theme      20160302.58   installed             A low contrast color theme for Emacs.
+ 
