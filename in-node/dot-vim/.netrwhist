@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/root/CXL/qemu-dev'
+let g:netrw_dirhist_8='/usr/include/cxl'
+let g:netrw_dirhist_7='/root/CXL/qemu/hw'
+let g:netrw_dirhist_6='/'
+let g:netrw_dirhist_5='/home/fan/cxl-tool/Documentation/cxl'
+let g:netrw_dirhist_4='/home/fan/cxl-tool/Documentation'
+let g:netrw_dirhist_3='/home/fan/cxl-tool/scripts'
+let g:netrw_dirhist_2='/root/.emacs.d'
+let g:netrw_dirhist_1='/root/CXL/ndctl/cxl'

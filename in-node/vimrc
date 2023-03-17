@@ -1,0 +1,129 @@
+"set clipboard=unnamedplus
+"set viminfo+=<500
+"imap qq <esc>
+
+
+" use system clipboard
+" https://anuragpeshne.github.io/essays/vim/7.html
+" vnoremap y "*y
+" vnoremap yy "*yy
+" vnoremap Y "*y$
+" vnoremap x "*x
+" vmap dl "*dd
+" vmap de "*D
+filetype plugin on
+
+nmap <return> <C-]>
+nmap <space> <C-t>
+nmap ww <C-w><C-w>
+nmap wl <C-w>l
+nmap wh <C-w>h
+nmap wj <C-w>j
+nmap wk <C-w>k
+nmap gt <esc>:
+
+set tabstop=4
+"colorscheme darkblue
+
+set foldmethod=syntax
+set cindent
+"set autoindent
+set tabstop=4
+set shiftwidth=4
+"set expandtab
+"set listchars=space:\|
+set listchars=tab:..,trail:~,extends:>,precedes:<,space:\ 
+"set listchars+=space:␣
+set list
+
+"inoremap { {}<Esc>ha
+"inoremap ( ()<Esc>ha
+"inoremap [ []<Esc>ha
+"inoremap " ""<Esc>ha
+"inoremap ' ''<Esc>ha
+"inoremap ` ``<Esc>ha
+
+" Automatically closing braces
+inoremap {<CR> {<CR>}<Esc>ko<tab>
+inoremap [<CR> [<CR>]<Esc>ko<tab>
+inoremap (<CR> (<CR>)<Esc>ko<tab>
+
+set laststatus=2
+set statusline=%<%f\ %h%m%r\ %1*%{CTagInStatusLine()}%*%=%-14.(%l,%c%V%)\ %P
+
+set cursorline
+set cursorcolumn
+
+"nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
+"nnoremap <silent> <Leader>c :execute 'match Search /\%'.virtcol('.').'v/'<CR>
+
+hi ColorColumn ctermbg=lightgrey guibg=lightgrey
+set cc=80
+hi CursorColumn ctermbg=lightblue guibg=lightgrey
+hi CursorLine term=bold cterm=bold ctermbg=lightblue guibg=lightgrey
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" " alternatively, pass a path where Vundle should install plugins
+" "call vundle#begin('~/some/path/here')
+"
+" " let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+"
+" " The following are examples of different formats supported.
+" " Keep Plugin commands between vundle#begin/end.
+" " plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" " plugin from http://vim-scripts.org/vim/scripts.html
+" " Plugin 'L9'
+" " Git plugin not hosted on GitHub
+" Plugin 'git://git.wincent.com/command-t.git'
+" " git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" " The sparkup vim script is in a subdirectory of this repo called vim.
+" " Pass the path to set the runtimepath properly.
+" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" " Install L9 and avoid a Naming conflict if you've already installed a
+	" " different version somewhere else.
+	" " Plugin 'ascenator/L9', {'name': 'newL9'}
+Plugin 'file:///root/.vim/awesome-vim-colorschemes'
+"
+	" " All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+	" " To ignore plugin indent changes, instead use:
+	" "filetype plugin on
+	" "
+	" " Brief help
+	" " :PluginList       - lists configured plugins
+	" " :PluginInstall    - installs plugins; append `!` to update or just
+	" :PluginUpdate
+	" " :PluginSearch foo - searches for foo; append `!` to refresh local
+	" cache
+	" " :PluginClean      - confirms removal of unused plugins; append `!` to
+	" auto-approve removal
+	" "
+	" " see :h vundle for more details or wiki for FAQ
+	" " Put your non-Plugin stuff after this
+set background=light
+colorscheme atom
+"colorscheme lightning
+
+hi CursorLine cterm=none
+hi CursorLine gui=none
+highlight CursorLine term=bold cterm=bold ctermfg=red gui=bold ctermbg=none
+nmap csg :cs find g 
+nmap css :cs find s 
+nmap cst :cs find t 
+nmap csc :cs find c 
+nmap t <C-\>
+set backspace=indent,eol,start
+set nu
+
+nmap rb o<enter>Reviewed-by: Fan Ni <fan.ni@samsung.com><enter><esc>
+nmap tb o<enter>Tested-by: Fan Ni <fan.ni@samsung.com><enter><esc>
+noremap! <C-?> <C-h>
