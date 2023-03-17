@@ -1,0 +1,13 @@
+[user]
+	email = nifan@outlook.com
+	name = Fan Ni
+[core]
+	editor = vim
+[sendemail]
+	from = nifan@outlook.com
+    smtpserver = smtp.office365.com
+    smtpserverport = 587
+    smtpencryption = tls
+    smtpuser = nifan@outlook.com
+    suppresscc = self
+    chainreplyto = false
